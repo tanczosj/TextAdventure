@@ -19,6 +19,8 @@ while (true)
 {
     Console.Clear();
 
+	Textfx.TypeLine("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\n", 0);
+
 	Textfx.TypeLine(current.Description + "\n", 25);
 
 	if (current.Choices.Count == 0)

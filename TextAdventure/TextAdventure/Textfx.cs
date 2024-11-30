@@ -23,7 +23,19 @@ internal static class Textfx
 				Console.Write(message[i]);
 				Thread.Sleep(delay);
 			}
-		}
+
+			if (i != 0 && i % 80 == 0) 
+				Console.WriteLine();
+
+            if (Console.KeyAvailable)
+            {
+                ConsoleKeyInfo keypress = Console.ReadKey(true);
+
+                if (keypress.Key == ConsoleKey.Spacebar)
+                    delay = 0;
+            }
+
+        }
 	}
 
 	private static bool IsHexDigit(char c) =>

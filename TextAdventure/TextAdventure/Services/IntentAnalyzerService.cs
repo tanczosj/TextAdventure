@@ -27,7 +27,7 @@ public class IntentAnalyzerService
 
     }
 
-    public Intent GetIntent(Room room, string userResponse)
+    public Intent GetIntent(Models.Room room, string userResponse)
 	{
 		ChatCompletion chatCompletion = _client.CompleteChat(GetSystemMessage(room), $"User says: {userResponse}");
 
@@ -54,7 +54,7 @@ public class IntentAnalyzerService
 		return null; // Return null if no JSON object is found
 	}
 
-    private ChatMessage GetSystemMessage(Room room)
+    private ChatMessage GetSystemMessage(Models.Room room)
 	{
 		string choices = string.Join("\n", room.Choices.Select(choice => "-" + choice.Description));
 
