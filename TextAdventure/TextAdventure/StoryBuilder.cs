@@ -12,20 +12,20 @@ public class StoryBuilder
 	{
 		Story story = new Story();
 
-		story.Rooms[Room.Warehouse] = new Models.Room
+		story.Rooms[Rooms.Warehouse] = new Models.Room
 		{
-			RoomId = Room.Warehouse,
+			RoomId = Rooms.Warehouse,
             Description = "You wake up on a cold, metal floor, disoriented and alone, with no memory of how you got here—only the eerie hum of an abandoned spaceship that seems to whisper your name, though you can't remember why.",
             Choices = [
-                new Choice("Inspect the door", Room.InspectDoor),
+                new Choice("Inspect the door", Rooms.InspectDoor),
                 new Choice("Try to figure out where you are and what happened.", "Figure_Out"),
                 new Choice("Search for any helpful items", "search")
             ]
 		};
 
-		story.Rooms[Room.InspectDoor] = new Models.Room()
+		story.Rooms[Rooms.InspectDoor] = new Models.Room()
 		{
-			RoomId = Room.InspectDoor,
+			RoomId = Rooms.InspectDoor,
 			Description = "You walk up to the metal door and inspect it. You notice it has a lock near the center",
             Choices = [
                 new Choice("Try to figure out where you are and what happened.", "Figure_Out"),
@@ -50,10 +50,11 @@ public class StoryBuilder
         story.Rooms["Unlock"] = new Models.Room()
         {
             RoomId = "Unlock",
-            Description = "As you twist the key the steel door opens to reveal a giant abandoned room. You notice two unlocked wooden doors on each side of the room ",
+            Description = "As you twist the key the steel door opens to reveal a giant abandoned room. You notice two unlocked steel doors on each side of the room ",
             Choices = [
                 new Choice("Search the room", "SearchOpenRoom"),
-                new Choice("Try to figure out where you are and what happened", "FigureOut2")
+                new Choice("Enter the first door", "Door1"),
+                new Choice("Enter the second door", "Door2")
             ]
         };
         story.Rooms["ChuckTheKey"] = new Models.Room()
@@ -70,15 +71,40 @@ public class StoryBuilder
                 new Choice("Try to climb out of the trap room", "Death1")
             ]
         };
-        story.Rooms["FigureOut2"] = new Models.Room()
+        story.Rooms["Door1"] = new Models.Room()
         {
-            RoomId = "FigureOut2",
-            Description = "As you are trying to remember what had happened you feel a buzzing on your arm. You look down to see an arm band labeled \"Far-Bot\" ."
+            RoomId = "Door1",
+            Description = "You walk into room one and look around. The room is a messy blank white room with one TV screen hanging against the wall. Suddenly the steel door slams shut behind you and locks. You are trapped in this room. The TV screen flickers on showing what appears to be a man wearing a shattered fighter jet mask.After just a moment of silent the dull figure begins to speak \"Hello there... We haven't had visitors in a while now. I want to make sure you remember this visit. In front of you are two doors one will lead to your end... the other will lead to prosperity\"",
+            Choices = [
+                new Choice("Open door one", "CorrectDoor"),
+                new Choice("Open door two", "Death2"),
+                new Choice("Stop", "Stop2")
+                ]
         };
         story.Rooms["Death1"] = new Models.Room()
         {
             RoomId = "Death1",
             Description = "You can clearly see the opening back into the large room is within reach.You decide to jump up and grab onto to flooring of the large open room.As you are pulling yourself up your fingers slip and you fall and hit your head against the stone tiled flooring of the cold icolated trap room.The End."
+        };
+        story.Rooms["Death2"] = new Models.Room()
+        {
+            RoomId = "Death2",
+            Description = "You open the door and get launched out into space. The End."
+        };
+        story.Rooms["Door2"] = new Models.Room()
+        {
+            RoomId = "Door2",
+            Description = "You walk into room one and look around. The room is a messy blank white room with one TV screen hanging against the wall. Suddenly the steel door slams shut behind you and locks. You are trapped in this room. The TV screen flickers on showing what appears to be a man wearing a shattered fighter jet mask. After a just a moment of silent the dull figure begins to speak \"Hello there... We haven't had visitors in a while now. I want to make sure you remember this visit\""
+        };
+        story.Rooms["CorrectDoor"] = new Models.Room()
+        {
+            RoomId = "CorrectDoor",
+            Description = "You open the door and see piles upon piles of gold.On top of all of that you see a rocket you could use to get home.You use the rocket and safley make it back to Earth"
+        };
+        story.Rooms["Stop"] = new Models.Room()
+        {
+            RoomId = "Stop",
+            Description = "You pause to figure out what is going on."
         };
         return story;
 	}

@@ -9,32 +9,54 @@ internal static class Textfx
 {
 	public static void Type(string message, int delay = 50)
 	{
-		for (int i = 0; i < message.Length; i++)
+		int count = 0;
+
+		var words = message.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+		for (int j = 0; j < words.Length; j++) 
 		{
-			if (message[i] == '|' && i + 1 < message.Length && IsHexDigit(message[i + 1]))
-			{
-				// Change color based on the hex digit
-				char colorCode = message[++i]; // Advance to the hex digit
-				Console.ForegroundColor = GetConsoleColorFromHex(colorCode);
-			}
-			else
-			{
-				// Print the character and delay
-				Console.Write(message[i]);
-				Thread.Sleep(delay);
-			}
+			string word = words[j];
+			count++;
 
-			if (i != 0 && i % 80 == 0) 
+			if (count + word.Length > 80)
+			{
 				Console.WriteLine();
+				count = 0;
+			}
 
-            if (Console.KeyAvailable)
+            for (int i = 0; i < word.Length; i++)
             {
-                ConsoleKeyInfo keypress = Console.ReadKey(true);
+                if (word[i] == '|' && i + 1 < word.Length && IsHexDigit(word[i + 1]))
+                {
+                    // Change color based on the hex digit
+                    char colorCode = word[++i]; // Advance to the hex digit
+                    Console.ForegroundColor = GetConsoleColorFromHex(colorCode);
+                }
+                else
+                {
+                    count++;
+                    // Print the character and delay
+                    Console.Write(word[i]);
+                    Thread.Sleep(delay);
+                }
 
-                if (keypress.Key == ConsoleKey.Spacebar)
-                    delay = 0;
+                if (count == 0 && count % 80 == 0)
+                {
+                    Console.WriteLine();
+                    count = 0;
+                }
+
+                if (Console.KeyAvailable)
+                {
+                    ConsoleKeyInfo keypress = Console.ReadKey(true);
+
+                    if (keypress.Key == ConsoleKey.Spacebar)
+                        delay = 0;
+                }
+
             }
 
+			if (j != words.Length - 1)
+				Console.Write(" ");
         }
 	}
 

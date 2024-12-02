@@ -19,11 +19,12 @@ while (true)
 {
     Console.Clear();
 
+	// Display description of room to user
 	Textfx.TypeLine("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\n", 0);
-
 	Textfx.TypeLine(current.Description + "\n", 25);
+    Textfx.TypeLine("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\n", 0);
 
-	if (current.Choices.Count == 0)
+    if (current.Choices.Count == 0)
 		break;
 
     Textfx.TypeLine("|2What would you like to do |Enext|2?");
@@ -38,6 +39,13 @@ while (true)
 	{
 		Console.Write("\nWhat is your choice? : ");
 		string response = Console.ReadLine();
+
+		// If user wants to stop then switch to the stop room
+		if (response.ToLower() == "stop")
+		{
+			option = new Choice(string.Empty, "Stop");
+			break;
+		}
 
 		var intent = intentAnalyzer.GetIntent(current, response);
 

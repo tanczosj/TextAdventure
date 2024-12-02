@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TextAdventure
 {
-    internal static class Room
+    internal static class Rooms
     {
         public const string Warehouse = "warehouse";
         public const string InspectDoor = "Inspect_Door";
