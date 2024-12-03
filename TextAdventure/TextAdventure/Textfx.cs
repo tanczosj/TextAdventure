@@ -1,6 +1,15 @@
 ﻿namespace TextAdventure;
+
+/// <summary>
+/// Outputs text in a fancy way
+/// </summary>
 internal static class Textfx
 {
+    /// <summary>
+    /// Types out message to the user
+    /// </summary>
+    /// <param name="message">Message to output</param>
+    /// <param name="delay">Delay in milliseconds between each character being printed</param>
     public static void Type(string message, int delay = 50)
     {
         int count = 0;

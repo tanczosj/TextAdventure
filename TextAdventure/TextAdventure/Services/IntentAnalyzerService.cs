@@ -4,6 +4,7 @@ using System.Text.RegularExpressions;
 using Microsoft.Extensions.Configuration;
 using OpenAI.Chat;
 using TextAdventure.Models;
+using TextAdventure.Enum;
 
 namespace TextAdventure.Services;
 
@@ -29,7 +30,7 @@ public class IntentAnalyzerService
         var response = chatCompletion.Content.First().Text;
         var json = ExtractJsonObject(response);
 
-        var intent = JsonSerializer.Deserialize<Intent>(json) ?? new Intent { Status = "unclear", Message = "Try something else" };
+        var intent = JsonSerializer.Deserialize<Intent>(json) ?? new Intent { Status = IntentResult.UnclearChoice, Message = "Try something else" };
 
         return intent;
     }
@@ -56,16 +57,29 @@ public class IntentAnalyzerService
         return ChatMessage.CreateSystemMessage(@"
 Your response should be constructed strictly in JSON format. I will be using the following C# object representation of your response:
 
+public enum IntentResult
+{
+    /// <summary>
+    /// User response matched up with an available choice
+    /// </summary>
+    MatchedChoice = 1,
+
+    /// <summary>
+    /// User response did not match up with an available choice
+    /// </summary>
+    UnclearChoice = 2
+}
+
 class Intent
 {
-	public string Status { get; set; } = string.Empty;
+    public IntentResult Status { get; set; } = IntentResult.UnclearChoice;
     public string Message { get; set; } = string.Empty;
 }
 
 You are the dungeon master of a text adventure game.  I am going to present the story of a room you are currently in.  
 Then I will present the choices a user can make that will dictate where they go next.  You job is to decipher their intent 
 and print out the choice that they mean to pick exactly how it is written in the choices list. If it is clear the status 
-is ""choice"" and the Message is the exact choice text. If it is unclear then status is ""unclear"" and the Message is a 
+is ""1"" and the Message is the exact choice text. If it is unclear then status is ""2"" and the Message is a 
 short and polite message that lets them know that their choice isn't clear. Do not repeat options.
 
 Room Description:

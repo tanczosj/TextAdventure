@@ -1,15 +1,19 @@
 ﻿using TextAdventure.Models;
 
 namespace TextAdventure;
+
+/// <summary>
+/// Story for the game
+/// </summary>
 public class StoryBuilder
 {
     public Story Build()
     {
         Story story = new Story();
 
-        story.Rooms[Rooms.Warehouse] = new Models.Room
+        story.Rooms[Rooms.SpaceshipOpening] = new Models.Room
         {
-            RoomId = Rooms.Warehouse,
+            RoomId = Rooms.SpaceshipOpening,
             Description = "You wake up on a cold, metal floor, disoriented and alone, with no memory of how you got here—only the eerie hum of an abandoned spaceship that seems to whisper your name, though you can't remember why.As you get up you look out of the window and see the vastness of space.It hits you that you are stuck on an abandoned space ship.You need to get safely back home.",
             Choices = [
                 new Choice("Inspect the door", Rooms.InspectDoor),
