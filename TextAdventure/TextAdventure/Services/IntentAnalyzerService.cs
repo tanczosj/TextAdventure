@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
+﻿using System.Reflection;
 using System.Text.Json;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using OpenAI.Chat;
 using TextAdventure.Models;
@@ -14,49 +9,49 @@ namespace TextAdventure.Services;
 
 public class IntentAnalyzerService
 {
-	private ChatClient _client;
-    
-    public IntentAnalyzerService()
-	{
-		var builder = new ConfigurationBuilder()
-			.AddUserSecrets(Assembly.GetExecutingAssembly());
-		var configurationRoot = builder.Build();
+    private ChatClient _client;
 
-		var key = configurationRoot.GetSection("OpenAIKey").Get<string>() ?? string.Empty;
-		_client = new(model: "gpt-4o-mini", apiKey: key);
+    public IntentAnalyzerService()
+    {
+        var builder = new ConfigurationBuilder()
+            .AddUserSecrets(Assembly.GetExecutingAssembly());
+        var configurationRoot = builder.Build();
+
+        var key = configurationRoot.GetSection("OpenAIKey").Get<string>() ?? string.Empty;
+        _client = new(model: "gpt-4o-mini", apiKey: key);
 
     }
 
     public Intent GetIntent(Models.Room room, string userResponse)
-	{
-		ChatCompletion chatCompletion = _client.CompleteChat(GetSystemMessage(room), $"User says: {userResponse}");
+    {
+        ChatCompletion chatCompletion = _client.CompleteChat(GetSystemMessage(room), $"User says: {userResponse}");
 
-		var response = chatCompletion.Content.First().Text;
-		var json = ExtractJsonObject(response);
+        var response = chatCompletion.Content.First().Text;
+        var json = ExtractJsonObject(response);
 
-		var intent = JsonSerializer.Deserialize<Intent>(json) ?? new Intent { Status = "unclear", Message = "Try something else" };
+        var intent = JsonSerializer.Deserialize<Intent>(json) ?? new Intent { Status = "unclear", Message = "Try something else" };
 
-		return intent;
-	}
+        return intent;
+    }
 
-	static string ExtractJsonObject(string input)
-	{
+    static string ExtractJsonObject(string input)
+    {
         // Regular expression to match the first JSON object
         var regex = new Regex(@"{[^{}]*}", RegexOptions.Singleline);
 
         var match = regex.Match(input);
 
-		if (match.Success)
-		{
-			return match.Value; // Return the matched JSON object
-		}
+        if (match.Success)
+        {
+            return match.Value; // Return the matched JSON object
+        }
 
-		return null; // Return null if no JSON object is found
-	}
+        return null; // Return null if no JSON object is found
+    }
 
     private ChatMessage GetSystemMessage(Models.Room room)
-	{
-		string choices = string.Join("\n", room.Choices.Select(choice => "-" + choice.Description));
+    {
+        string choices = string.Join("\n", room.Choices.Select(choice => "-" + choice.Description));
 
         return ChatMessage.CreateSystemMessage(@"
 Your response should be constructed strictly in JSON format. I will be using the following C# object representation of your response:

@@ -1,50 +1,45 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TextAdventure.Models;
+﻿using TextAdventure.Models;
 
 namespace TextAdventure;
 public class StoryBuilder
 {
-	public Story Build()
-	{
-		Story story = new Story();
+    public Story Build()
+    {
+        Story story = new Story();
 
-		story.Rooms[Rooms.Warehouse] = new Models.Room
-		{
-			RoomId = Rooms.Warehouse,
+        story.Rooms[Rooms.Warehouse] = new Models.Room
+        {
+            RoomId = Rooms.Warehouse,
             Description = "You wake up on a cold, metal floor, disoriented and alone, with no memory of how you got here—only the eerie hum of an abandoned spaceship that seems to whisper your name, though you can't remember why.As you get up you look out of the window and see the vastness of space.It hits you that you are stuck on an abandoned space ship.You need to get safely back home.",
             Choices = [
                 new Choice("Inspect the door", Rooms.InspectDoor),
                 new Choice("Try to figure out where you are and what happened.", "Figure_Out"),
                 new Choice("Search for any helpful items", "search")
             ]
-		};
+        };
 
-		story.Rooms[Rooms.InspectDoor] = new Models.Room()
-		{
-			RoomId = Rooms.InspectDoor,
-			Description = "You walk up to the metal door and inspect it. You notice it has a lock near the center.",
+        story.Rooms[Rooms.InspectDoor] = new Models.Room()
+        {
+            RoomId = Rooms.InspectDoor,
+            Description = "You walk up to the metal door and inspect it. You notice it has a lock near the center.",
             Choices = [
                 new Choice("Try to figure out where you are and what happened.", "Figure_Out"),
                 new Choice("Search for any helpful items", "search")
             ]
         };
 
-		story.Rooms["Figure_Out"] = new Models.Room()
-		{
-			RoomId = "Figure_Out",
-			Description = "You try to recollect past events but nothing else comes to your mind.",
+        story.Rooms["Figure_Out"] = new Models.Room()
+        {
+            RoomId = "Figure_Out",
+            Description = "You try to recollect past events but nothing else comes to your mind.",
             Choices = [
                 new Choice("Search for any helpful items", "search")
             ]
         };
-		story.Rooms["search"] = new Models.Room()
-		{
-			RoomId = "search",
-			Description = "You search around the empty room and find a metal key.",
+        story.Rooms["search"] = new Models.Room()
+        {
+            RoomId = "search",
+            Description = "You search around the empty room and find a metal key.",
             Choices = [
                 new Choice("Use the key on the door", "Unlock"),
                 new Choice("Chuck the key", "ChuckTheKey")
@@ -98,16 +93,19 @@ public class StoryBuilder
             RoomId = "Door2",
             Description = "You walk into room one and look around. The room is a messy blank white room with one TV screen hanging against the wall. Suddenly the steel door slams shut behind you and locks. You are trapped in this room. The TV screen flickers on showing what appears to be a man wearing a shattered fighter jet mask. After a just a moment of silent the dull figure begins to speak \"Hello there... We haven't had visitors in a while now. I want to make sure you remember this visit\""
         };
+        
         story.Rooms["CorrectDoor"] = new Models.Room()
         {
             RoomId = "CorrectDoor",
             Description = "You open the door and see piles upon piles of gold.On top of all of that, you see a rocket you could use to get home.You use the rocket and safley make it back to Earth."
         };
+
         story.Rooms["Stop"] = new Models.Room()
         {
             RoomId = "Stop",
             Description = "You pause to figure out what is going on."
         };
+
         return story;
-	}
+    }
 }
